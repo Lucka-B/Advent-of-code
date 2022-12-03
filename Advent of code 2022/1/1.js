@@ -3,8 +3,7 @@ import fs from "fs";
 // full input file
 const file = fs.readFileSync("input.txt").toString().trim();
 
-const elvesCalories = file.split("\n").map(Number);
-console.log(elvesCalories);
+const elvesCalories = file.split("\n").map(Number); //.slice(0, 10);
 
 let elfSum = 0;
 const caloriesArray = [];
@@ -16,11 +15,12 @@ for (
 ) {
   const caloriesLine = elvesCalories[caloriesLineIndex];
   if (caloriesLine !== 0) {
-    elfSum = elfSum + caloriesLineIndex;
+    elfSum = elfSum + caloriesLine;
   } else {
     caloriesArray.push(elfSum);
     elfSum = 0;
   }
 }
 
-console.log(caloriesArray);
+const maxCalories = Math.max(...caloriesArray);
+console.log(maxCalories);

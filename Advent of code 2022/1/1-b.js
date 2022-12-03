@@ -1,29 +1,32 @@
-import fs from 'fs';
+import fs from "fs";
 
 // full input file
-const file = fs.readFileSync('input.txt').toString().trim();
+const file = fs.readFileSync("input.txt").toString().trim();
 
-const moduleMasses = file.split('\n').map(Number);
+const elvesCalories = file.split("\n").map(Number); //.slice(0, 10);
 
-let totalFuelNeeded = 0;
+let elfSum = 0;
+const caloriesArray = [];
 
-function massToFuel(mass) {
-    return Math.floor(mass / 3) - 2;
-};
-
-for (let moduleIndex = 0; moduleIndex < moduleMasses.length; moduleIndex++) {
-    const moduleMass = moduleMasses[moduleIndex];
-    const fuelForModule = massToFuel(moduleMass);
-    totalFuelNeeded = totalFuelNeeded + fuelForModule;
-
-    let fuelForFuel = massToFuel(fuelForModule);
-
-    while (fuelForFuel > 0) {
-        totalFuelNeeded = totalFuelNeeded + fuelForFuel;
-        fuelForFuel = massToFuel(fuelForFuel);
-    };
+for (
+  let caloriesLineIndex = 0;
+  caloriesLineIndex < elvesCalories.length;
+  caloriesLineIndex++
+) {
+  const caloriesLine = elvesCalories[caloriesLineIndex];
+  if (caloriesLine !== 0) {
+    elfSum = elfSum + caloriesLine;
+  } else {
+    caloriesArray.push(elfSum);
+    elfSum = 0;
+  }
 }
-///////////////////
 
+const maxCalories = Math.max(...caloriesArray);
+console.log(maxCalories);
 
-console.log(totalFuelNeeded);
+caloriesArray.sort((a, b) => b - a);
+console.log(caloriesArray);
+
+const sumTopThree = caloriesArray[0] + caloriesArray[1] + caloriesArray[2];
+console.log("result", sumTopThree);
