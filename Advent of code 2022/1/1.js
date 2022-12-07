@@ -1,16 +1,26 @@
-import fs from 'fs';
+import fs from "fs";
 
 // full input file
-const file = fs.readFileSync('input.txt').toString().trim();
+const file = fs.readFileSync("input.txt").toString().trim();
 
-const moduleMasses = file.split('\n').map(Number);
+const elvesCalories = file.split("\n").map(Number); //.slice(0, 10);
 
-let totalFuelNeeded = 0;
+let elfSum = 0;
+const caloriesArray = [];
 
-for (let moduleIndex = 0; moduleIndex < moduleMasses.length; moduleIndex++) {
-    const moduleMass = moduleMasses[moduleIndex];
-    const fuelForModule = Math.floor(moduleMass / 3) - 2;
-    totalFuelNeeded = totalFuelNeeded + fuelForModule;
+for (
+  let caloriesLineIndex = 0;
+  caloriesLineIndex < elvesCalories.length;
+  caloriesLineIndex++
+) {
+  const caloriesLine = elvesCalories[caloriesLineIndex];
+  if (caloriesLine !== 0) {
+    elfSum = elfSum + caloriesLine;
+  } else {
+    caloriesArray.push(elfSum);
+    elfSum = 0;
+  }
 }
 
-console.log(totalFuelNeeded);
+const maxCalories = Math.max(...caloriesArray);
+console.log(maxCalories);
